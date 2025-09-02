@@ -107,6 +107,20 @@ tb_cliente.TB_USUARIO_FK
 ('LARISSA FERREIRA','(11) 95678-9000','RUA DO MERCADO','49',11),
 ('THIAGO SILVA','(11) 96222-3333','RUA DAS JASMINS','876',12);
 
+
+insert into tb_tipo_produto(
+tb_tipo_produto.TB_TIPO_PRODUTO_DESC)
+values
+('LANCHE'),
+('SALGADO'),
+('BEBIDA'),
+('PORÇÃO'),
+('SORVETE'),
+('SOBREMESA'),
+('DOCE'),
+('PIZZA'),
+('PASTEL');
+
 INSERT INTO tb_produto (
 TB_PRODUTO_NOME,
 TB_TIPO_PRODUTO_ID,
@@ -153,7 +167,10 @@ VALUES
 
 select * from tb_usuarios;
 select * from tb_cliente;
+ select * from tb_tipo_produto;
  
+
+
 drop database BD_vitoria_lanches;
  
  
