@@ -6,6 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form action="">
+
+
+    </form>
+    <a href="CadCliente.php">Não tem uma conta ainda? Clique aqui</a>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,10 +11,20 @@
     <header class="header">
         <nav class="cabecalho">
             <a href="#" >Pedido</a>
-            <a href="#">Cadastrar</a>
-            <a href="#" >Entrar</a> 
+            <a href="#" >Produtos</a>
+            <a href="#" >Relatório</a>
+            <a href="gerenciarProd.php" >Gerenciar produtos</a>
+            
+
+            <a href="cadCliente.php">Cadastrar</a>
+            <a href="login.php" >Entrar</a> 
         </nav>
     </header>
+
+    <div class="produtos-home">
+        <h2>Veja alguns produtos disponível</h2>
+
+    </div>
 
 
 </body>
