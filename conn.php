@@ -4,7 +4,7 @@
     function conectarBanco() {
         $host = "localhost";
         $user = "root";
-        $password = "root";
+        $password = "Pe20082001.";
         $database = "BD_vitoria_lanches";
     
         // Criação da conexão

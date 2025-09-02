@@ -1,9 +1,24 @@
 <?php
-    require_once 'funcao.php';
+require_once 'funcao.php';
 
-    $conn = conectarBanco();
+$conn = conectarBanco();
 
-    $string_tipoProduto = LerTipoProd();
+$string_tipoProduto = LerTipoProd();
+
+$produtos = [];
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_tipoProd_filtro'])) {
+    $id_tipoProd = $_POST['id_tipoProd_filtro'];
+
+    $produtos = LerProduto($id_tipoProd);
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['acao'] === 'criar_prod') {
+    CadProduto($_POST['nomeProd'], $_POST['precoProd'], $_POST['descricaoProd'], $_POST['id_tipoProd']);
+}
+
 
 
 
@@ -16,31 +31,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Produto</title>
+    <link rel="stylesheet" href="styleGerenciar.css">
 </head>
 
 <body>
-    <form action="CadCliente.php" method="POST">
-        <input type="hidden" name="acao" value="criar_prod">
 
-        Nome do produto: <input type="text" name="nomeUsuario" placeholder="Digite o seu nome" Required><br>
+    <div class="criarProd">
 
-        preço do produto: <input type="text" name="precoProd" placeholder="Digite uma senha" Required><br>
-        Descricão do produto: <input type="text" name="descricaoProd" placeholder="Digite a descrição do produto">
+        <h1>Criar Produto</h1>
         <br>
+        <form action="gerenciarProd.php" method="POST">
+            <input type="hidden" name="acao" value="criar_prod">
 
+            Nome do produto: <input type="text" name="nomeProd" placeholder="Digite o seu nome" Required><br>
+
+            preço do produto: <input type="text" name="precoProd" placeholder="Digite uma senha" Required><br>
+            Descricão do produto: <input type="text" name="descricaoProd" placeholder="Digite a descrição do produto">
+            <br>
+
+
+
+            <select name="id_tipoProd">
+                <option value="" disabled selected>Selecione o tipo do produto</option>
+                <?php foreach ($string_tipoProduto as $tipo_prod): ?>
+                    <option value="<?= $tipo_prod['TB_TIPO_PRODUTO_ID'] ?> "><?= $tipo_prod['TB_TIPO_PRODUTO_DESC'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <a href="tipoProd.php"> Adicionar um tipo de produto</a>
+            <br>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+    <div class="filtrarProd">
+    <h2>Filtrar produto por categoria</h2>
+    <form method="post">
         
+            <select name="id_tipoProd_filtro">
+                <option value="" disabled selected>Selecione o tipo do produto</option>
+                <?php foreach ($string_tipoProduto as $tipo_prod): ?>
+                    <option value="<?= $tipo_prod['TB_TIPO_PRODUTO_ID'] ?> "><?= $tipo_prod['TB_TIPO_PRODUTO_DESC'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
 
-        <select name="id_tipoProd">
-            <?php foreach ($string_tipoProduto as $tipo_prod): ?>
-                <option value="<?= $tipo_prod['TB_TIPO_PRODUTO_ID'] ?> "><?= $tipo_prod['TB_TIPO_PRODUTO_DESC'] ?></option>
-            <?php endforeach; ?>
-        </select>
-    
-        <a href="tipoProd.php"> Adicionar um tipo de produto</a>
-        <br>
-
-        <button type="submit">Cadastrar</button>
+        <button type="submit">Buscar</button>
     </form>
+    <h3>Produtos Encontrados</h3>
+    <table>
+        <tr><th>Produto</th><th>Preço</th><th>Categoria</th></tr>
+        <?php foreach ($produtos as $umprodutoporvez): ?>
+                <tr>
+                    <td><?= htmlspecialchars($umprodutoporvez['nome_produto']) ?></td>
+                    <td>R$ <?= number_format($umprodutoporvez['preco'], 2, ',', '.') ?></td>
+                    <td><?= htmlspecialchars($umprodutoporvez['descricao']) ?></td>
+                    <td><?= htmlspecialchars($umprodutoporvez['tipoProduto']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        
+    </table>
+    </div>
 </body>
 
 </html>
