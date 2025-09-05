@@ -1,5 +1,6 @@
 <?php
 require_once 'conn.php';
+require_once 'dados.php';
 
 function CadUsuario($nome, $senha)
 {
@@ -36,10 +37,11 @@ function CadProduto($nome, $preco, $descricao, $tipoProd_id)
     header('Location: gerenciarProd.php');
 }
 
-function LerProduto($id_tipoProd){
-     $conn = conectarBanco();
+function LerProduto($id_tipoProd)
+{
+    $conn = conectarBanco();
 
-            $sql = "SELECT 
+    $sql = "SELECT 
             tb_produto.TB_PRODUTO_NOME AS nome_produto, 
             tb_produto.TB_PRODUTO_PRECO_UNIT AS preco,
             tb_produto.Tb_PRODUTO_DESC AS descricao,
@@ -49,24 +51,24 @@ function LerProduto($id_tipoProd){
         INNER JOIN 
             tb_tipo_produto ON tb_produto.TB_TIPO_PRODUTO_ID = tb_tipo_produto.TB_TIPO_PRODUTO_ID
         Where 
-            tb_tipo_produto.TB_TIPO_PRODUTO_ID = ?"; 
+            tb_tipo_produto.TB_TIPO_PRODUTO_ID = ?";
 
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $id_tipoProd);
-        $stmt->execute();
-        $result = $stmt ->get_result();
-        
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_tipoProd);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
 
 
 
-         while ($row = $result->fetch_assoc()) {
-         $produtos[] = $row;
-        }
-        $conn->close();
-        $stmt->close();
-        return $produtos;
+
+    while ($row = $result->fetch_assoc()) {
+        $produtos[] = $row;
+    }
+    $conn->close();
+    $stmt->close();
+    return $produtos;
 }
 
 function LerTipoProd()
@@ -100,7 +102,52 @@ function CadTipoProd($tipoProduto)
     header('Location: gerenciarProd.php');
 }
 
-function DeleteProd(){
+function DeleteProd()
+{
+
+}
+
+
+function VerificarUser($username, $senha)
+{
+    $conn = conectarBanco();
+
+    $sql = "SELECT * FROM tb_usuarios WHERE TB_USUARIOS_USERNAME = ? AND TB_USUARIOS_PASSWORD = ?";
+
+    $stmt= $conn->prepare($sql);
+    $stmt->bind_Param("ss" , $username,$senha);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+
+if ($result->num_rows > 0) {
+    $usuario = $result->fetch_assoc();
+
+    $logado = true;
+    $adm = false;
+
+    if($usuario['TB_USUARIOS_TIPO'] == 'adm')
+    {
+        
+        $adm = true;
+        echo 'voce é adm';
+    }
+
+    header('Location: Home.php?');
+    exit();
+
+    
+  } else {
+    echo "<script>";
+    echo "alert('falha no login')  ";
+    echo "</script>";
+  }
+
+
+  $stmt->close();
+  $conn->close();
 
 }
 

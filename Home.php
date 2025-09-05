@@ -12,7 +12,7 @@
         <nav class="cabecalho">
             <a href="#" >Pedido</a>
             <a href="#" >Produtos</a>
-            <a href="#" >Relatório</a>
+            <a href="relatorio.php" >Relatório</a>
             <a href="gerenciarProd.php" >Gerenciar produtos</a>
             
 

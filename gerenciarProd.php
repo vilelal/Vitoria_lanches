@@ -1,12 +1,13 @@
 <?php
 require_once 'funcao.php';
+require_once 'dados.php';
 
 $conn = conectarBanco();
 
 $string_tipoProduto = LerTipoProd();
 
 $produtos = [];
-
+$tipoUsuarioAdm = $adm;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_tipoProd_filtro'])) {
     $id_tipoProd = $_POST['id_tipoProd_filtro'];
@@ -82,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
     </form>
     <h3>Produtos Encontrados</h3>
     <table>
-        <tr><th>Produto</th><th>Preço</th><th>Categoria</th></tr>
+        <tr><th>Produto</th><th>Preço</th><th>Descricao</th><th>Tipo do produto</th></tr>
         <?php foreach ($produtos as $umprodutoporvez): ?>
                 <tr>
                     <td><?= htmlspecialchars($umprodutoporvez['nome_produto']) ?></td>
@@ -91,6 +92,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
                     <td><?= htmlspecialchars($umprodutoporvez['tipoProduto']) ?></td>
                 </tr>
             <?php endforeach; ?>
+
+            
+        <h2>Painel de Administração</h2>
+        <p>Aqui você pode ver informações restritas para administradores.</p>
+
         
     </table>
     </div>
