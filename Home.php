@@ -1,3 +1,10 @@
+<?php
+    require_once 'funcao.php';
+
+    $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : '';  
+
+?>
+ 
  <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +19,13 @@
         <nav class="cabecalho">
             <a href="#" >Pedido</a>
             <a href="#" >Produtos</a>
-            <a href="relatorio.php" >Relatório</a>
-            <a href="gerenciarProd.php" >Gerenciar produtos</a>
+            <?php
+            if ($tipo == 'adm'){
+            
+            echo "<a href='relatorio.php' >Relatório</a>";
+            echo "<a href='gerenciarProd.php' >Gerenciar produtos</a>";
+        }
+            ?>
             
 
             <a href="cadCliente.php">Cadastrar</a>

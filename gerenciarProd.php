@@ -36,7 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
 </head>
 
 <body>
-
+<h2>Painel de Administração</h2>
+            <p>Aqui você pode ver informações restritas para administradores.</p>
     <div class="criarProd">
 
         <h1>Criar Produto</h1>
@@ -68,9 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
     </div>
 
     <div class="filtrarProd">
-    <h2>Filtrar produto por categoria</h2>
-    <form method="post">
-        
+        <h2>Filtrar produto por categoria</h2>
+        <form method="post">
+
             <select name="id_tipoProd_filtro">
                 <option value="" disabled selected>Selecione o tipo do produto</option>
                 <?php foreach ($string_tipoProduto as $tipo_prod): ?>
@@ -79,26 +80,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
                 <?php endforeach; ?>
             </select>
 
-        <button type="submit">Buscar</button>
-    </form>
-    <h3>Produtos Encontrados</h3>
-    <table>
-        <tr><th>Produto</th><th>Preço</th><th>Descricao</th><th>Tipo do produto</th></tr>
-        <?php foreach ($produtos as $umprodutoporvez): ?>
+            <button type="submit">Buscar</button>
+        </form>
+        <h3>Produtos Encontrados</h3>
+        <table>
+            <tr>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th>Descricao</th>
+                <th>Tipo do produto</th>
+            </tr>
+            <?php foreach ($produtos as $umprodutoporvez): ?>
                 <tr>
                     <td><?= htmlspecialchars($umprodutoporvez['nome_produto']) ?></td>
                     <td>R$ <?= number_format($umprodutoporvez['preco'], 2, ',', '.') ?></td>
                     <td><?= htmlspecialchars($umprodutoporvez['descricao']) ?></td>
                     <td><?= htmlspecialchars($umprodutoporvez['tipoProduto']) ?></td>
+                <?php 
+                //ver se vai dar certo
+            
+                    echo "<form method='post' action='index.php' style='display:inline;'>";
+                    echo "    <input type='hidden' name='acao' value='excluir'>";
+                    echo"    <input type='hidden' name='id' value='" .$tarefa[' id'] . "'>";
+                    echo"    <button type='submit'>Excluir</button>";
+                    echo "</form>";
+         ?>
                 </tr>
             <?php endforeach; ?>
 
-            
-        <h2>Painel de Administração</h2>
-        <p>Aqui você pode ver informações restritas para administradores.</p>
 
-        
-    </table>
+            
+
+
+        </table>
     </div>
 </body>
 

@@ -110,7 +110,9 @@ function DeleteProd()
 
 function VerificarUser($username, $senha)
 {
+
     $conn = conectarBanco();
+  
 
     $sql = "SELECT * FROM tb_usuarios WHERE TB_USUARIOS_USERNAME = ? AND TB_USUARIOS_PASSWORD = ?";
 
@@ -121,22 +123,28 @@ function VerificarUser($username, $senha)
 
     $result = $stmt->get_result();
 
+    $tipo = null;
 
 if ($result->num_rows > 0) {
     $usuario = $result->fetch_assoc();
 
-    $logado = true;
-    $adm = false;
+
 
     if($usuario['TB_USUARIOS_TIPO'] == 'adm')
     {
-        
-        $adm = true;
-        echo 'voce é adm';
-    }
+        echo "<form id='loginForm' method='POST' action='home.php'>";
+        echo "<input type='hidden' name='tipo' value='adm'>";
+         echo '<script>document.getElementById("loginForm").submit();</script>';
 
-    header('Location: Home.php?');
-    exit();
+        echo "</form>";
+       
+        
+        
+    }
+    else{
+    header("Location: Home.php");
+}
+    
 
     
   } else {
