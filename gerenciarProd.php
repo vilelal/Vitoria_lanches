@@ -20,9 +20,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
     CadProduto($_POST['nomeProd'], $_POST['precoProd'], $_POST['descricaoProd'], $_POST['id_tipoProd']);
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $acao = $_POST['acao'] ?? '';
 
-
-
+    if ($acao === 'excluir') {
+        DeleteProd($_POST['id_prod']);
+    }elseif ($acao === 'excluir') {
+        EditProd($_POST);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
 </head>
 
 <body>
-<h2>Painel de Administração</h2>
-            <p>Aqui você pode ver informações restritas para administradores.</p>
+    <h2>Painel de Administração</h2>
+    <p>Aqui você pode ver informações restritas para administradores.</p>
     <div class="criarProd">
 
         <h1>Criar Produto</h1>
@@ -89,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
                 <th>Preço</th>
                 <th>Descricao</th>
                 <th>Tipo do produto</th>
+                <th>Excluir produto</th>
             </tr>
             <?php foreach ($produtos as $umprodutoporvez): ?>
                 <tr>
@@ -96,20 +103,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && $_POST['ac
                     <td>R$ <?= number_format($umprodutoporvez['preco'], 2, ',', '.') ?></td>
                     <td><?= htmlspecialchars($umprodutoporvez['descricao']) ?></td>
                     <td><?= htmlspecialchars($umprodutoporvez['tipoProduto']) ?></td>
-                <?php 
-                //ver se vai dar certo
-            
-                    echo "<form method='post' action='index.php' style='display:inline;'>";
-                    echo "    <input type='hidden' name='acao' value='excluir'>";
-                    echo"    <input type='hidden' name='id' value='" .$tarefa[' id'] . "'>";
-                    echo"    <button type='submit'>Excluir</button>";
-                    echo "</form>";
-         ?>
+                    <td>
+                        <?php
+                        //ver se vai dar certo
+                    
+                        echo "<form method='post' action='gerenciarProd.php' style='display:inline;'>";
+                        echo "<input type='hidden' name='acao' value='excluir'>";
+                        echo "<input type='hidden' name='id_prod' value='" . $umprodutoporvez['id_prod'] . "'>";
+                        echo "<button type='submit'>Excluir</button>";
+                        echo "</form>";
+                        ?>
+                    </td>
+                    <td>
+                        <a href="editarProd.php">Editar</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
 
 
-            
+
 
 
         </table>

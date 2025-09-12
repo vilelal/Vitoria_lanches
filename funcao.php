@@ -42,6 +42,7 @@ function LerProduto($id_tipoProd)
     $conn = conectarBanco();
 
     $sql = "SELECT 
+            tb_produto.TB_PRODUTO_ID AS id_prod,  
             tb_produto.TB_PRODUTO_NOME AS nome_produto, 
             tb_produto.TB_PRODUTO_PRECO_UNIT AS preco,
             tb_produto.Tb_PRODUTO_DESC AS descricao,
@@ -59,13 +60,11 @@ function LerProduto($id_tipoProd)
     $stmt->execute();
     $result = $stmt->get_result();
 
-
-
-
-
+    
     while ($row = $result->fetch_assoc()) {
         $produtos[] = $row;
     }
+
     $conn->close();
     $stmt->close();
     return $produtos;
@@ -102,9 +101,35 @@ function CadTipoProd($tipoProduto)
     header('Location: gerenciarProd.php');
 }
 
-function DeleteProd()
+function DeleteProd($id_prod)
 {
+    $conn = conectarBanco();
+    $sql = "DELETE FROM tb_produto WHERE TB_PRODUTO_ID = ?";
+    $stmt = $conn->prepare($sql);
 
+    $stmt->bind_param("i", $id_prod);
+    $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+    header('Location: gerenciarProd.php');
+    exit();
+}
+
+function EditProd($dados)
+{
+        $conn = conectarBanco();
+        $sql = "UPDATE tb_produto SET  TB_PRODUTO_NOME= ?, TB_TIPO_PRODUTO_ID  = ?, TB_PRODUTO_DESC = ?,  TB_PRODUTO_PRECO_UNIT = ? WHERE TB_PRODUTO_ID = ?";
+        $stmt = $conn->prepare($sql);
+    
+        $stmt->bind_param("ssssi", $dados['nomeProd'], $dados['id_prod'], $dados['descricaoProd'], $dados['preco_unit']);
+        $stmt->execute();
+    
+        $stmt->close();
+        $conn->close();
+        header('Location: index.php');
+        exit();
+    
 }
 
 
@@ -112,12 +137,12 @@ function VerificarUser($username, $senha)
 {
 
     $conn = conectarBanco();
-  
+
 
     $sql = "SELECT * FROM tb_usuarios WHERE TB_USUARIOS_USERNAME = ? AND TB_USUARIOS_PASSWORD = ?";
 
-    $stmt= $conn->prepare($sql);
-    $stmt->bind_Param("ss" , $username,$senha);
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_Param("ss", $username, $senha);
 
     $stmt->execute();
 
@@ -125,37 +150,34 @@ function VerificarUser($username, $senha)
 
     $tipo = null;
 
-if ($result->num_rows > 0) {
-    $usuario = $result->fetch_assoc();
+    if ($result->num_rows > 0) {
+        $usuario = $result->fetch_assoc();
 
 
 
-    if($usuario['TB_USUARIOS_TIPO'] == 'adm')
-    {
-        echo "<form id='loginForm' method='POST' action='home.php'>";
-        echo "<input type='hidden' name='tipo' value='adm'>";
-         echo '<script>document.getElementById("loginForm").submit();</script>';
+        if ($usuario['TB_USUARIOS_TIPO'] == 'adm') {
+            echo "<form id='loginForm' method='POST' action='home.php'>";
+            echo "<input type='hidden' name='tipo' value='adm'>";
+            echo '<script>document.getElementById("loginForm").submit();</script>';
+            echo "</form>";
 
-        echo "</form>";
-       
-        
-        
+
+
+        } else {
+            header("Location: Home.php");
+        }
+
+
+
+    } else {
+        echo "<script>";
+        echo "alert('falha no login')  ";
+        echo "</script>";
     }
-    else{
-    header("Location: Home.php");
-}
-    
-
-    
-  } else {
-    echo "<script>";
-    echo "alert('falha no login')  ";
-    echo "</script>";
-  }
 
 
-  $stmt->close();
-  $conn->close();
+    $stmt->close();
+    $conn->close();
 
 }
 

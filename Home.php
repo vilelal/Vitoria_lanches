@@ -21,9 +21,8 @@
             <a href="#" >Produtos</a>
             <?php
             if ($tipo == 'adm'){
-            
-            echo "<a href='relatorio.php' >Relatório</a>";
-            echo "<a href='gerenciarProd.php' >Gerenciar produtos</a>";
+            echo "<a href='relatorio.php'>Relatório</a>";
+            echo "<a href='gerenciarProd.php'>Gerenciar produtos</a>";
         }
             ?>
             
