@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Fundo suave com degradê ou cor de fundo clara */
+    background: linear-gradient(135deg, #f0f4f7 0%, #e0e7e9 100%); 
+    display: flex; /* Centraliza o conteúdo verticalmente e horizontalmente */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ocupa a altura total da tela */
+    color: #333;
+}
+
+/* -------------------------------------------------------------------
+ * 2. Estilos do Formulário de Login
+ * ------------------------------------------------------------------- */
+form {
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 380px; /* Largura máxima controlada */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaçamento uniforme entre os elementos */
+    margin-bottom: 20px;
+}
+
+/* Estiliza os rótulos (Nome: e Senha:) */
+form label {
+    font-weight: bold;
+    color: #5C6BC0;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Estiliza os campos de input */
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box; /* Garante que padding e border não aumentem a largura total */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Efeito de foco (quando o usuário clica no campo) */
+form input:focus {
+    border-color: #5C6BC0;
+    box-shadow: 0 0 0 3px rgba(92, 107, 192, 0.2);
+    outline: none;
+}
+
+/* -------------------------------------------------------------------
+ * 3. Estilos do Botão "Entrar"
+ * ------------------------------------------------------------------- */
+form button[type="submit"] {
+    background-color: #5C6BC0; /* Cor primária */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+form button[type="submit"]:hover {
+    background-color: #4A58AA; /* Cor um pouco mais escura no hover */
+}
+
+/* -------------------------------------------------------------------
+ * 4. Estilos do Link de Cadastro
+ * ------------------------------------------------------------------- */
+a {
+    color: #5C6BC0;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 5px;
+    border-bottom: 1px dashed transparent; /* Para um efeito sutil */
+    transition: border-bottom 0.3s;
+}
+
+a:hover {
+    color: #4A58AA;
+    border-bottom: 1px dashed #4A58AA;
+}
